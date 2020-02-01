@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  payme-api:
+    image: payme/api:latest
+    container_name: payme-api
+    tty: true
+    volumes:
+      - ./app:/app
+    ports:
+      - 30001:3000"
+    networks:
+      - payme-network
+
+  payme-db:
+    image: mysql:5.7
+    container_name: payme-db
+    command: --default-authentication-plugin=mysql_native_password --sql_mode=""
+    restart: always
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    ports:
+      - 33061:3306
+    networks:
+      - payme-network
+
+#Docker Networks
+networks:
+  payme-network:
+    driver: bridge
