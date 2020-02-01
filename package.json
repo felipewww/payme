@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "watch": "tsc -w --preserveWatchOutput & nodemon dist/app.js & jest --watchAll",
+    "test": "jest",
+    "test-commit": "jest"
   },
   "keywords": [],
   "author": "",

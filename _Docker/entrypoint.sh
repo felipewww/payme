@@ -6,5 +6,5 @@ NC='\033[0m' # No Color
 
 echo -e  "${GREEN} Composing API container... ${NC} ${YELLOW} ${NC}"
 
-npm install
-bash
+npm install && \
+    tsc && npm run watch
