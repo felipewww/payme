@@ -10,7 +10,10 @@ These instructions will get you a copy of the project up and running on your loc
 #### Prerequisites
 
 - Docker and docker-compose
-    - https://docs.docker.com/compose/install/ 
+    - https://docs.docker.com/compose/install/
+
+- Husky (https://www.npmjs.com/package/husky)
+    - Should be installed   
 
 #### Installing
 

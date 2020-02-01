@@ -5,10 +5,12 @@ services:
     image: payme/api:latest
     container_name: payme-api
     tty: true
+    command:
+      - /entrypoint.sh
     volumes:
-      - ./app:/app
+      - .:/app
     ports:
-      - 30001:3000"
+      - 30001:3000
     networks:
       - payme-network
 

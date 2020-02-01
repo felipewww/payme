@@ -2,8 +2,5 @@ version: '3'
 
 services:
   api-image:
-    build: ./app/_Docker
-#      context: .
-#      dockerfile: Dockerfile.api.docker
-#    image: upx/raspberry-api:latest
+    build: ./_Docker
     image: payme/api:latest

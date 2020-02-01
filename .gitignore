@@ -1,5 +1,5 @@
 mysql-data
 .idea
-app/node_modules
-app/dist
-app/coverage
+node_modules
+dist
+coverage
