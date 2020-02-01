@@ -1,2 +1,4 @@
 mysql-data
 .idea
+app/node_modules
+app/dist
