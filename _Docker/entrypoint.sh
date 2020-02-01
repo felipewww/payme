@@ -6,5 +6,4 @@ NC='\033[0m' # No Color
 
 echo -e  "${GREEN} Composing API container... ${NC} ${YELLOW} ${NC}"
 
-npm install && \
-    tsc && npm run watch
+npm install && tsc && knex migrate:latest && npm run watch
