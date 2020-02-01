@@ -1,21 +1,18 @@
-### Payment Service Provider (PSP)
+# Payment Service Provider (PSP)
 
 Nodejs application developed using clean architecture with Typescript for a basic PSP
 
 
-#### Getting started
+### Getting started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-#### Prerequisites
+### Prerequisites
 
 - Docker and docker-compose
-    - https://docs.docker.com/compose/install/
+    - https://docs.docker.com/compose/install/   
 
-- Husky (https://www.npmjs.com/package/husky)
-    - Should be installed   
-
-#### Installing
+### Installing
 
 - First, run docker-compose to create local images to improve docker performance
 
