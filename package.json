@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "tsc -w --preserveWatchOutput & nodemon dist/app.js & jest --watchAll",
+    "watch": "tsc -w --preserveWatchOutput & nodemon dist/app.js & jest --watchAll --coverage=false",
     "test": "jest",
     "test-commit": "jest"
   },
