@@ -10,13 +10,20 @@ exports.up = function(knex) {
       table.string('card_number', 4).notNullable();
       table.integer('card_due_date_month').notNullable();
       table.integer('card_due_date_year').notNullable();
-      // table.string('card_cvv', 255).notNullable();
-      table.integer('client_id').notNullable();
+
+      table.dateTime('created_at')
+
+      table.integer('client_id')
+        .unsigned()
+        .index()
+        .references('id')
+        .inTable('clients')
+        .notNullable()
+        .onDelete('RESTRICT')
     })
 };
 
 exports.down = function(knex) {
   return knex.schema
     .dropTable("transactions")
-
 };
