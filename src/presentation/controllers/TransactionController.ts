@@ -57,7 +57,6 @@ export class TransactionController {
         };
 
         let processTransaction = new ProcessTransaction(transactionData);
-
         return processTransaction.process();
     }
 }

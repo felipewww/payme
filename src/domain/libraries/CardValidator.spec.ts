@@ -7,16 +7,18 @@ function mockCard(): ICard {
     }
 }
 
+let underTest = new CardValidator();
+
 describe('ProcessTransaction', () => {
     test('Should send CVV as number with size 3', () => {
         let card: ICard = mockCard();
         card.cvv = 1561
-        expect(() => new CardValidator(card)).toThrow(Error)
+        expect(underTest.validate(card)).toBeFalsy();
     })
 
     test('Should send correct card number (with 16 chars)', () => {
         let card: ICard = mockCard();
         card.cardNumber = '1561';
-        expect(() => new CardValidator(card)).toThrow(Error)
+        expect(underTest.validate(card)).toBeFalsy();
     })
 });

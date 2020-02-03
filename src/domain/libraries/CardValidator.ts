@@ -7,17 +7,15 @@ export interface ICard {
  * Fake helper for make card validation, just returning TRUE
  */
 export class CardValidator {
-    constructor(private card: ICard) {
-        if (this.card.cvv.toString().length !== 3) {
-            throw new Error('Invalid CVV')
+    public validate(card: ICard): boolean {
+        if (card.cvv.toString().length !== 3) {
+            return false;
         }
 
-        if (this.card.cardNumber.length != 16) {
-            throw new Error('Invalid card number size')
+        if (card.cardNumber.length != 16) {
+            return false;
         }
-    }
 
-    public validate(): boolean {
         return true;
     }
 }

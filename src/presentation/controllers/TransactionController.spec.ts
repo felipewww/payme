@@ -2,7 +2,7 @@ import {TransactionController} from "@Controllers/TransactionController";
 import {IHttpRequest} from "@Protocols/Http";
 
 const underTest = new TransactionController();
-jest.spyOn(underTest, 'doTransaction').mockResolvedValue([1]);
+const spy = jest.spyOn(underTest, 'doTransaction').mockResolvedValue([1]);
 
 function mockHttpRequest(propNameToDelete?: string): IHttpRequest {
     let mockRequest: IHttpRequest = {
@@ -10,7 +10,7 @@ function mockHttpRequest(propNameToDelete?: string): IHttpRequest {
             value: 100.00,
             description: 'TBrand XYZ',
             paymentMethod: 'debit_card',
-            cardNumber: 9652378452364589,
+            cardNumber: '9652378452364589',
             payerName: 'Jane Doe',
             cardDueDate: '01/2020',
             CVV: 562,

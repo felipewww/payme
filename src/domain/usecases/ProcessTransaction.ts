@@ -14,6 +14,8 @@ export class ProcessTransaction {
             throw new Error('Invalid card')
         }
 
+        // ...call  payment gateway here
+
         return this.saveTransaction();
     }
 
@@ -23,8 +25,8 @@ export class ProcessTransaction {
             cvv: this.transactionData.CVV,
         };
 
-        let cardValidator = new CardValidator(this.card);
-        return cardValidator.validate();
+        let cardValidator = new CardValidator();
+        return cardValidator.validate(this.card);
     }
 
     public saveTransaction(): Promise<Array<number>>  {
