@@ -2,8 +2,9 @@ import {TransactionController} from "@Controllers/TransactionController";
 import {IHttpRequest} from "@Protocols/Http";
 
 const underTest = new TransactionController();
+jest.spyOn(underTest, 'doTransaction').mockResolvedValue([1]);
 
-function getMock(propNameToDelete?: string): any {
+function mockHttpRequest(propNameToDelete?: string): IHttpRequest {
     let mockRequest: IHttpRequest = {
         body: {
             value: 100.00,
@@ -13,6 +14,7 @@ function getMock(propNameToDelete?: string): any {
             payerName: 'Jane Doe',
             cardDueDate: '01/2020',
             CVV: 562,
+            clientID: 1,
         }
     };
 
@@ -24,51 +26,64 @@ function getMock(propNameToDelete?: string): any {
 }
 
 describe('TransactionController', () => {
-    test('Should return 200 if sent correct body', () => {
-        let cloneMock = getMock();
-        const response = underTest.handle(cloneMock)
+    test('Should return 200 if sent correct body', async () => {
+        let cloneMock = mockHttpRequest();
+        const response = await underTest.handle(cloneMock)
         expect(response.statusCode()).toBe(200);
     });
 
-    test('Should return 400 if have no transaction value', () => {
-        let cloneMock = getMock('value');
-        const response = underTest.handle(cloneMock)
+    test('Should return 400 if have no transaction value', async () => {
+        let cloneMock = mockHttpRequest('value');
+        const response = await underTest.handle(cloneMock)
         expect(response.statusCode()).toBe(400);
     });
 
-    test('Should return 400 if have no description', () => {
-        let cloneMock = getMock('description');
-        const response = underTest.handle(cloneMock)
+    test('Should return 400 if have no description', async () => {
+        let cloneMock = mockHttpRequest('description');
+        const response = await underTest.handle(cloneMock)
         expect(response.statusCode()).toBe(400);
     });
 
-    test('Should return 400 if have no payment method', () => {
-        let cloneMock = getMock('paymentMethod');
-        const response = underTest.handle(cloneMock)
+    test('Should return 400 if have no payment method', async () => {
+        let cloneMock = mockHttpRequest('paymentMethod');
+        const response = await underTest.handle(cloneMock)
         expect(response.statusCode()).toBe(400);
     });
 
-    test('Should return 400 if have no card number', () => {
-        let cloneMock = getMock('cardNumber');
-        const response = underTest.handle(cloneMock)
+    test('Should return 400 if have no card number', async () => {
+        let cloneMock = mockHttpRequest('cardNumber');
+        const response = await underTest.handle(cloneMock)
         expect(response.statusCode()).toBe(400);
     });
 
-    test('Should return 400 if have no payer name', () => {
-        let cloneMock = getMock('payerName');
-        const response = underTest.handle(cloneMock)
+    test('Should return 400 if have no payer name', async () => {
+        let cloneMock = mockHttpRequest('payerName');
+        const response = await underTest.handle(cloneMock)
         expect(response.statusCode()).toBe(400);
     });
 
-    test('Should return 400 if have no card due date', () => {
-        let cloneMock = getMock('cardDueDate');
-        const response = underTest.handle(cloneMock)
+    test('Should return 400 if have no card due date', async () => {
+        let cloneMock = mockHttpRequest('cardDueDate');
+        const response = await underTest.handle(cloneMock)
         expect(response.statusCode()).toBe(400);
     });
 
-    test('Should return 400 if have no CVV', () => {
-        let cloneMock = getMock('CVV');
-        const response = underTest.handle(cloneMock)
+    test('Should return 400 if have no CVV', async () => {
+        let cloneMock = mockHttpRequest('CVV');
+        const response = await underTest.handle(cloneMock)
         expect(response.statusCode()).toBe(400);
+    });
+
+    test('Should return 400 if have no clientID', async () => {
+        let cloneMock = mockHttpRequest('clientID');
+        const response = await underTest.handle(cloneMock)
+        expect(response.statusCode()).toBe(400);
+    });
+
+    test('Should return 500 if something goes bad with doTransaction', async () => {
+        jest.spyOn(underTest, 'doTransaction').mockRejectedValue(false)
+        let cloneMock = mockHttpRequest();
+        const response = await underTest.handle(cloneMock)
+        expect(response.statusCode()).toBe(500);
     });
 });

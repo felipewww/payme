@@ -1,4 +1,4 @@
-import HttpResponse from "@Helpers/http/HttpResponse";
+import HttpResponse from "@Helpers/HttpResponse/HttpResponse";
 
 export class Success extends HttpResponse {
     constructor() {

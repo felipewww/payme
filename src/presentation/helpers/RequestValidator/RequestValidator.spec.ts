@@ -1,4 +1,4 @@
-import {RequestValidator} from "@Helpers/http/RequestValidator";
+import {RequestValidator} from "@Helpers/RequestValidator/RequestValidator";
 import {IHttpRequest} from "@Protocols/Http";
 
 let mockRequest: IHttpRequest = {

@@ -82,6 +82,10 @@ module.exports = {
   moduleNameMapper: {
     "^@Controllers(.*)$": "<rootDir>/src/presentation/controllers/$1",
     "^@Helpers(.*)$": "<rootDir>/src/presentation/helpers/$1",
+    "^@Repositories(.*)$": "<rootDir>/src/domain/repositories/$1",
+    "^@Models(.*)$": "<rootDir>/src/domain/models/$1",
+    "^@UseCases(.*)$": "<rootDir>/src/domain/usecases/$1",
+    "^@Libs(.*)$": "<rootDir>/src/domain/libraries/$1",
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
