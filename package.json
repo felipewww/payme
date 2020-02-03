@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "tsc -w --preserveWatchOutput & nodemon dist/app.js & jest --watchAll --coverage=false",
+    "watch": "tsc -w --preserveWatchOutput & nodemon dist/main/app.js & jest --watchAll --coverage=false",
     "test": "jest",
     "test-commit": "jest"
   },
@@ -12,8 +12,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/colors": "^1.2.1",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.2",
     "@types/jest": "^25.1.1",
     "@types/knex": "^0.16.1",
+    "@types/module-alias": "^2.0.0",
     "@types/node": "^13.7.0",
     "husky": "^4.2.1",
     "jest": "^25.1.0",
@@ -21,7 +25,12 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "knex": "^0.20.8",
-    "mysql2": "^2.1.0"
+    "module-alias": "^2.2.2",
+    "mysql2": "^2.1.0",
+    "source-map-support": "^0.5.16"
   }
 }
