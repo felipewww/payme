@@ -21,6 +21,8 @@ exports.up = function(knex) {
         .notNullable();
 
       table.dateTime('payment_date').notNullable();
+
+      table.decimal('value');
     })
 };
 

@@ -42,18 +42,12 @@ export class Payable {
     }
 
     public getPaymentDate(): Date {
-        let date: Date;
-        switch (this.transaction.paymentMethod.name()) {
-            case "debit_card":
-                date = this.transaction.createdAt;
-                break;
+        return this.addDays(this.transaction.createdAt, this.transaction.paymentMethod.getWaitingDays())
+    }
 
-            case "credit_card":
-                date = this.addDays(this.transaction.createdAt, 30);
-                break;
-        }
-
-        return date;
+    public getValue() {
+        let fee = this.transaction.value * (this.transaction.paymentMethod.getPercentTax() / 100);
+        return this.transaction.value - fee
     }
 
     private addDays(date: Date, days: number): Date {

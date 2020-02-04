@@ -6,7 +6,8 @@ export class PayableRepository {
         let data = {
             transaction_id: payable.getTransaction().id,
             payable_status_id: payable.getStatus().id,
-            payment_date: payable.getPaymentDate()
+            payment_date: payable.getPaymentDate(),
+            value: payable.getValue()
         };
 
         let model = new PayableModel();

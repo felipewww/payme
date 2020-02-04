@@ -31,4 +31,16 @@ describe('Payable', () => {
 
         expect(payableCredit.getStatus()).toMatchObject(expectWaitingFunds);
     })
+
+    test('should calculate correct fee based on payment method', () => {
+        let transactionDebit = TransactionMock('debit_card');
+        let payableDebit = makePayable(transactionDebit);
+
+        expect(payableDebit.getValue()).toBe(97.00) //3% of 100
+
+        let transactionCredit = TransactionMock('credit_card');
+        let payableCredit = makePayable(transactionCredit);
+
+        expect(payableCredit.getValue()).toBe(95.00) //5% of 100
+    })
 })

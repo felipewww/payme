@@ -1,4 +1,7 @@
 export abstract class PaymentMethod {
+    protected percentTax: number;
+    protected waitingDays: number = 0;
+
     protected constructor(private _name: "debit_card"|"credit_card"){
 
     }
@@ -9,5 +12,13 @@ export abstract class PaymentMethod {
 
     name() {
         return this._name;
+    }
+
+    getPercentTax() {
+        return this.percentTax;
+    }
+
+    getWaitingDays() {
+        return this.waitingDays;
     }
 }
