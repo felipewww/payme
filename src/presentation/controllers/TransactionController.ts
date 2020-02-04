@@ -15,13 +15,14 @@ export class TransactionController {
             return new BadRequest( new InvalidRequestError() );
         }
 
+        let transaction: Transaction;
         try{
-            await this.doTransaction(request);
+            transaction = await this.doTransaction(request);
         } catch (e) {
             return new BadRequest( e );
         }
 
-        return new Success();
+        return new Success({ transaction });
     }
 
     private validateRequest(request: IHttpRequest): boolean {

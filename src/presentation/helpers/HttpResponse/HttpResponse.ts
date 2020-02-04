@@ -1,5 +1,6 @@
 export default abstract class HttpResponse {
     protected error: Error;
+    protected data: any;
 
     protected constructor(protected _statusCode: number) {
 
@@ -10,11 +11,14 @@ export default abstract class HttpResponse {
     }
 
     getErrorMessage(): string {
-        console.log(this.error);
         if (this.error) {
             return this.error.message;
         }
 
         return null;
+    }
+
+    getData(): any {
+        return this.data;
     }
 }

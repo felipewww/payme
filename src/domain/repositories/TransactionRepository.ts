@@ -24,7 +24,9 @@ export class TransactionRepository {
             client_id: data.clientID,
             description: data.description,
             payer_name: data.payerName,
-            payment_method: data.paymentMethod,
+
+            // sim... Deveria ter uma tabela aqui para armazenar estes valores...
+            payment_method: (data.paymentMethod === 'credit_card') ? 0 : 1,
             value: data.value,
         }
 

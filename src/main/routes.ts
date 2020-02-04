@@ -9,10 +9,11 @@ app.post('/api/v1/transaction', (request: Request, response: Response) => {
         .then((result: HttpResponse) => {
             let jsonResponse: any = {};
 
-            console.log(result)
             response.status(result.statusCode());
 
-            if (result.statusCode() !== 200) {
+            if (result.statusCode() === 200) {
+                jsonResponse.data = result.getData();
+            } else {
                 jsonResponse.error = result.getErrorMessage();
             }
 

@@ -1,7 +1,7 @@
 import HttpResponse from "@Helpers/HttpResponse/HttpResponse";
 
 export class Success extends HttpResponse {
-    constructor() {
+    constructor(protected data: any) {
         super(200);
     }
 }
