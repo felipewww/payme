@@ -6,4 +6,5 @@ moduleAlias.addAliases({
     '@Repositories': __dirname + '/../domain/repositories',
     '@Models': __dirname + '/../domain/models',
     '@Libs': __dirname + '/../domain/libraries',
+    '@Data': __dirname + '/../data',
 });

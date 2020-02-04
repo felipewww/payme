@@ -1,8 +1,18 @@
 import {TransactionController} from "@Controllers/TransactionController";
 import {IHttpRequest} from "@Protocols/Http";
+import {CreditCard} from "@Data/PaymentMethod/CreditCard";
 
 const underTest = new TransactionController();
-const spy = jest.spyOn(underTest, 'doTransaction').mockResolvedValue([1]);
+jest.spyOn(underTest, 'doTransaction').mockResolvedValue({
+    id: 1,
+    value: 1,
+    description: 'string',
+    paymentMethod: new CreditCard(),
+    cardNumber: 'string',
+    payerName: 'string',
+    cardDueDate: 'string',
+    clientID: 1,
+})
 
 function mockHttpRequest(propNameToDelete?: string): IHttpRequest {
     let mockRequest: IHttpRequest = {
@@ -80,10 +90,10 @@ describe('TransactionController', () => {
         expect(response.statusCode()).toBe(400);
     });
 
-    test('Should return 500 if something goes bad with doTransaction', async () => {
+    test('Should return 400 if something goes bad with doTransaction', async () => {
         jest.spyOn(underTest, 'doTransaction').mockRejectedValue(false)
         let cloneMock = mockHttpRequest();
         const response = await underTest.handle(cloneMock)
-        expect(response.statusCode()).toBe(500);
+        expect(response.statusCode()).toBe(400);
     });
 });

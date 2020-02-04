@@ -1,42 +1,53 @@
-import {ITransaction, TransactionRepository} from "@Repositories/TransactionRepository";
+import {TransactionRepository} from "@Repositories/TransactionRepository";
 import {CardValidator, ICard} from "@Libs/CardValidator";
+import {Transaction} from "@Data/Transaction";
+import {ITransactionRequest} from "@Protocols/TransactionRequest";
+import {PaymentMethodFactory} from "@Data/factories/PaymentMethodFactory";
 
 export class ProcessTransaction {
     private card: ICard;
-    public transactionData: Omit<ITransaction, 'id'>;
+    public transactionRequest: ITransactionRequest;
 
-    constructor(transactionData: Omit<ITransaction, 'id'>) {
-        this.transactionData = transactionData;
+    constructor(transactionRequest: ITransactionRequest) {
+        this.transactionRequest = transactionRequest;
     }
 
-    public async process(): Promise<Array<number>> {
+    public async process(): Promise<Transaction>  {
         if ( !this.validateCard() ){
             throw new Error('Invalid card')
         }
 
+        this.validateSentPaymentMethod();
         // ...call  payment gateway here
 
-        return this.saveTransaction();
+        return await this.saveTransaction();
     }
 
     public validateCard(): boolean {
         this.card = {
-            cardNumber: this.transactionData.cardNumber,
-            cvv: this.transactionData.CVV,
+            cardNumber: this.transactionRequest.cardNumber,
+            cvv: this.transactionRequest.CVV,
         };
 
         let cardValidator = new CardValidator();
         return cardValidator.validate(this.card);
     }
 
-    public saveTransaction(): Promise<Array<number>>  {
+    public validateSentPaymentMethod() {
+        PaymentMethodFactory.make(this.transactionRequest.paymentMethod);
+    }
+
+    public async saveTransaction(): Promise<Transaction> {
         this.cutCardNumber();
 
         let repo = new TransactionRepository();
-        return repo.store(this.transactionData);
+        const transactionID = await repo.store(this.transactionRequest)
+        let transaction = await repo.getById(transactionID[0]);
+
+        return new Transaction(transaction[0]);
     }
 
     public cutCardNumber(): void {
-        this.transactionData.cardNumber =  this.transactionData.cardNumber.slice(-4);
+        this.transactionRequest.cardNumber =  this.transactionRequest.cardNumber.slice(-4);
     }
 }

@@ -1,7 +1,7 @@
 import {ProcessTransaction} from "@UseCases/ProcessTransaction";
-import {ITransaction} from "@Repositories/TransactionRepository";
+import {ITransactionRequest} from "@Protocols/TransactionRequest";
 
-function mockTransactionData(): Omit<ITransaction, 'id'> {
+function mockTransactionRequest(): ITransactionRequest {
     return {
         CVV: 163,
         cardDueDate: "10/2030",
@@ -9,16 +9,16 @@ function mockTransactionData(): Omit<ITransaction, 'id'> {
         clientID: 1,
         description: "Some transaction description",
         payerName: "Felipe",
-        paymentMethod: "credit_card",
+        paymentMethod: 'credit_card',
         value: 10.00
     }
 }
 
-function makeProcessTransaction(transactionData: Omit<ITransaction, 'id'>) {
+function makeProcessTransaction(transactionData: ITransactionRequest) {
     return new ProcessTransaction(transactionData)
 }
 
-let underTest = makeProcessTransaction(mockTransactionData());
+let underTest = makeProcessTransaction(mockTransactionRequest());
 jest.spyOn(underTest, 'validateCard').mockReturnValue(true);
 
 describe('ProcessTransaction', () => {
@@ -34,6 +34,20 @@ describe('ProcessTransaction', () => {
 
     test('Should cut card number, keep only last 4 numbers', () => {
         underTest.cutCardNumber()
-        expect(underTest.transactionData.cardNumber).toBe('2563');
+        expect(underTest.transactionRequest.cardNumber).toBe('2563');
+    })
+
+    test('Should send a valid payment method', async() => {
+        let transactionRequest = mockTransactionRequest();
+        // @ts-ignore
+        transactionRequest.paymentMethod = 'invalid_method';
+        let sut = makeProcessTransaction(transactionRequest);
+
+        expect.assertions(1);
+        try {
+            sut.validateSentPaymentMethod();
+        } catch (e) {
+            expect(e.message).toBe('Invalid payment method');
+        }
     })
 })

@@ -1,20 +1,29 @@
 import {Model} from "@Models/Model";
-import {ITransaction} from "@Repositories/TransactionRepository";
+import {ITransactionRaw} from "@Repositories/TransactionRepository";
 
 export class TransactionModel extends Model {
-    async store(data: Omit<ITransaction, 'id'>): Promise<Array<number>> {
+    async store(data: any): Promise<Array<number>> {
         return this.builder
             .table('transactions')
-            .insert({
-                card_number: data.cardNumber,
-                card_due_date_month: 10,
-                card_due_date_year: 2021,
-                client_id: data.clientID,
-                description: data.description,
-                payer_name: data.payerName,
-                payment_method: data.paymentMethod,
-                value: data.value,
-            })
+            .insert(data)
             .returning('id')
+    }
+
+    async getById(id: number): Promise<Array<ITransactionRaw>> {
+        return this.builder
+            .table('transactions')
+            .select({
+                id: 'id',
+                cardNumber: 'card_number',
+                cardDueDate: this.builder.raw('CONCAT(card_due_date_month,"/",card_due_date_year)'),
+                cardDueDateMonth: 'card_due_date_month',
+                cardDueDateYear: 'card_due_date_year',
+                clientID: 'client_id',
+                description: 'description',
+                payerName: 'payer_name',
+                paymentMethod: 'payment_method',
+                value: 'value',
+            })
+            .where('id', id)
     }
 }

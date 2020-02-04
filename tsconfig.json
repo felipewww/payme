@@ -17,6 +17,7 @@
       "@Models/*": ["domain/models/*"],
       "@UseCases/*": ["domain/usecases/*"],
       "@Libs/*": ["domain/libraries/*"],
+      "@Data/*": ["data/*"],
       "*": [
         "node_modules/*",
         "src/types/*"

@@ -5,8 +5,8 @@ import {Success} from "@Helpers/HttpResponse/Success";
 import {RequestValidator} from "@Helpers/RequestValidator/RequestValidator";
 import {ProcessTransaction} from "@UseCases/ProcessTransaction";
 import {InvalidRequestError} from "@Helpers/Errors/InvalidRequestError";
-import {ITransaction} from "@Repositories/TransactionRepository";
-import {InternalServerError} from "@Helpers/HttpResponse/InternalServerError";
+import {ITransactionRequest} from "@Protocols/TransactionRequest";
+import {Transaction} from "@Data/Transaction";
 
 export class TransactionController {
 
@@ -15,13 +15,10 @@ export class TransactionController {
             return new BadRequest( new InvalidRequestError() );
         }
 
-        let transactionId: number;
-
         try{
-            const res = await this.doTransaction(request);
-            transactionId = res[0];
+            await this.doTransaction(request);
         } catch (e) {
-            return new InternalServerError(e);
+            return new BadRequest( e );
         }
 
         return new Success();
@@ -44,8 +41,8 @@ export class TransactionController {
         return validator.validate();
     }
 
-    public async doTransaction(request: IHttpRequest): Promise<Array<number>> {
-        const transactionData: Omit<ITransaction, 'id'> = {
+    public async doTransaction(request: IHttpRequest): Promise<Transaction> {
+        const transactionData: ITransactionRequest = {
             CVV: request.body.CVV,
             cardDueDate: request.body.cardDueDate,
             cardNumber: request.body.cardNumber,
