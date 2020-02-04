@@ -10,8 +10,4 @@ export class DebitCard extends PaymentMethod {
     status(): "waiting_funds" | "paid" {
         return "paid";
     }
-
-    paymentDate(): Date {
-        return new Date();
-    }
 }

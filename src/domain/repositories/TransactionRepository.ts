@@ -16,6 +16,7 @@ export interface ITransactionRaw {
 }
 
 export class TransactionRepository {
+
     async store(data: ITransactionRequest): Promise<Array<number>> {
         let model = new TransactionModel();
         const toStore = {

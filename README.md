@@ -41,20 +41,48 @@ $ knex seed:run
 #### Endpoints
 - All endpoints can be found within "main/routes.ts" and have no documentation yet, here is a resume of endpoints.
 - As api container running inside docker, you should call on mapped port described on docker-compose.yaml file (http://localhost:30001)
+    
+    * <strong>POST</strong> /api/v1/transaction
+    * <strong>GET</strong> /api/v1/paid/:userId
+    * <strong>GET</strong> /api/v1/waiting-funds/:userId
 
-##### making a transaction
-- /api/v1/transaction
+<br>
+<hr>
+<br>
 
-body {
-	"value": 100.00,
-	"description": "TBrand XYZ",
-	"paymentMethod": "debit_card",
-	"cardNumber": "9652378452364589",
-	"payerName": "Jane Doe",
-	"cardDueDate": "01/2020",
-	"CVV": 562,
-	"clientID": 1
+##### POST /api/v1/transaction
+
+**Parameters**
+
+|          Name | Required |  Type   | Description                                                                                                                                                           |
+| -------------:|:--------:|:-------:| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|     `value` | required | number  | Transaction amount. |
+|     `description` | required | string  | Basic description |
+|     `paymentMethod` | required | `"debit_card"` or `"credit_card"`  | Card type |
+|     `cardNumber` | required | string  | String with 16 size representas a card number |
+|     `payerName` | required | string  | Card pressed name |
+|     `cardDueDate` | required | `MM/YYYY`  | full string representing card due date |
+|     `CVV` | required | number  | Card CVV |
+|     `clientID` | required | number  | Who are payed |
+
+example
+```
+{
+    "value": 100.00,
+    "description": "TBrand XYZ",
+    "paymentMethod": "debit_card",
+    "cardNumber": "9652378452364589",
+    "payerName": "Jane Doe",
+    "cardDueDate": "01/2020",
+    "CVV": 562,
+    "clientID": 1
 }
+```
+
+##### GET /api/v1/paid/:userId
+##### GET /api/v1/waiting-funds/:userId
+
+<br>
 
 #### Deployment
 

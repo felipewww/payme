@@ -11,8 +11,4 @@ export class CreditCard extends PaymentMethod {
     status(): "waiting_funds" | "paid" {
         return "waiting_funds";
     }
-
-    paymentDate(): Date {
-        return new Date();
-    }
 }

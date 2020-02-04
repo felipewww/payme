@@ -1,7 +1,19 @@
 import {Payable} from "@Data/Payable";
 import {PayableModel} from "@Models/PayableModel";
+import {Filterable} from "@Utils/QueryFilters/Filterable";
 
 export class PayableRepository {
+
+    async get(filters?: Array<Filterable>) {
+        let model = new PayableModel();
+
+        if (filters) {
+            model.withFilters(filters);
+        }
+
+        return model.get();
+    }
+
     store(payable: Payable) {
         let data = {
             transaction_id: payable.getTransaction().id,

@@ -1,7 +1,9 @@
 import knex from 'knex';
+import {Filterable} from "@Utils/QueryFilters/Filterable";
 
 export class Model {
     public builder: knex;
+    private filters: Array<Filterable>;
 
     constructor(){
         this.builder = knex({
@@ -18,5 +20,19 @@ export class Model {
                 max: 1,
             }
         });
+    }
+
+    public withFilters(filters: Array<Filterable>) {
+        this.filters = filters;
+    }
+
+    protected exec(query: knex.QueryBuilder) {
+        if (this.filters.length) {
+            this.filters.forEach((filter: Filterable) => {
+                filter.apply(query);
+            });
+        }
+
+        return query;
     }
 }

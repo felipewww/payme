@@ -1,26 +1,18 @@
 import {app} from "./core";
 import {Request, Response} from "express";
 import {TransactionController} from "@Controllers/TransactionController";
-import HttpResponse from "@Helpers/HttpResponse/HttpResponse";
+import {WaitingFundsController} from "@Controllers/WaitingFundsController";
+import {PaidController} from "@Controllers/PaidController";
+import {Responser} from "./responser";
 
 app.post('/api/v1/transaction', (request: Request, response: Response) => {
-    new TransactionController()
-        .handle(request)
-        .then((result: HttpResponse) => {
-            let jsonResponse: any = {};
+    new Responser(new TransactionController().handle(request), response)
+});
 
-            response.status(result.statusCode());
+app.get('/api/v1/waiting-funds/:userId', (request: Request, response: Response) => {
+    new Responser(new WaitingFundsController().handle(request), response);
+});
 
-            if (result.statusCode() === 200) {
-                jsonResponse.data = result.getData();
-            } else {
-                jsonResponse.error = result.getErrorMessage();
-            }
-
-            response.json(jsonResponse);
-        })
-        .catch(err => {
-            response.status(500);
-            response.json({message: 'Unexpected error'})
-        })
+app.get('/api/v1/paid/:userId', (request: Request, response: Response) => {
+    new Responser(new PaidController().handle(request), response)
 });

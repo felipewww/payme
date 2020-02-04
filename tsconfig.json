@@ -18,6 +18,7 @@
       "@UseCases/*": ["domain/usecases/*"],
       "@Libs/*": ["domain/libraries/*"],
       "@Data/*": ["data/*"],
+      "@Utils/*": ["domain/utils/*"],
       "@Mocks/*": ["tests/mocks/*"],
       "*": [
         "node_modules/*",

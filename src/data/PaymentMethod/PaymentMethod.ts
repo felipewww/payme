@@ -8,8 +8,6 @@ export abstract class PaymentMethod {
 
     abstract status(): "waiting_funds"|"paid"
 
-    abstract paymentDate(): Date;
-
     name() {
         return this._name;
     }
