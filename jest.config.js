@@ -87,6 +87,7 @@ module.exports = {
     "^@UseCases(.*)$": "<rootDir>/src/domain/usecases/$1",
     "^@Libs(.*)$": "<rootDir>/src/domain/libraries/$1",
     "^@Data(.*)$": "<rootDir>/src/data/$1",
+    "^@Mocks(.*)$": "<rootDir>/src/tests/mocks/$1",
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader

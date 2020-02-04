@@ -12,6 +12,7 @@ export interface ITransactionRaw {
     cardDueDateYear: string;
     cardDueDate: string;
     clientID: number
+    createdAt: string;
 }
 
 export class TransactionRepository {
@@ -27,7 +28,7 @@ export class TransactionRepository {
 
             // sim... Deveria ter uma tabela aqui para armazenar estes valores...
             payment_method: (data.paymentMethod === 'credit_card') ? 0 : 1,
-            value: data.value,
+            value: data.value
         }
 
         return model.store(toStore);

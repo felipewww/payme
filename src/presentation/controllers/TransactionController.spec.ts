@@ -1,18 +1,11 @@
 import {TransactionController} from "@Controllers/TransactionController";
 import {IHttpRequest} from "@Protocols/Http";
 import {CreditCard} from "@Data/PaymentMethod/CreditCard";
+import {TransactionMock} from "@Mocks/Transaction";
 
 const underTest = new TransactionController();
-jest.spyOn(underTest, 'doTransaction').mockResolvedValue({
-    id: 1,
-    value: 1,
-    description: 'string',
-    paymentMethod: new CreditCard(),
-    cardNumber: 'string',
-    payerName: 'string',
-    cardDueDate: 'string',
-    clientID: 1,
-})
+jest.spyOn(underTest, 'processTransaction').mockResolvedValue(TransactionMock('credit_card'))
+jest.spyOn(underTest, 'processPayable').mockResolvedValue(true)
 
 function mockHttpRequest(propNameToDelete?: string): IHttpRequest {
     let mockRequest: IHttpRequest = {
@@ -34,6 +27,7 @@ function mockHttpRequest(propNameToDelete?: string): IHttpRequest {
 
     return mockRequest;
 }
+
 
 describe('TransactionController', () => {
     test('Should return 200 if sent correct body', async () => {
@@ -91,7 +85,7 @@ describe('TransactionController', () => {
     });
 
     test('Should return 400 if something goes bad with doTransaction', async () => {
-        jest.spyOn(underTest, 'doTransaction').mockRejectedValue(false)
+        jest.spyOn(underTest, 'processTransaction').mockRejectedValue(false)
         let cloneMock = mockHttpRequest();
         const response = await underTest.handle(cloneMock)
         expect(response.statusCode()).toBe(400);

@@ -11,6 +11,7 @@ export class Transaction {
     payerName: string;
     paymentMethod: PaymentMethod;
     value: number;
+    createdAt: Date;
 
     constructor(transactionRaw: ITransactionRaw) {
         this.id = transactionRaw.id;
@@ -21,5 +22,6 @@ export class Transaction {
         this.payerName = transactionRaw.payerName;
         this.paymentMethod = PaymentMethodFactory.make(transactionRaw.paymentMethod);
         this.value = transactionRaw.value;
+        this.createdAt = new Date(transactionRaw.createdAt);
     }
 }

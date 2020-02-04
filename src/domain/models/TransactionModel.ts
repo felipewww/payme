@@ -24,6 +24,7 @@ export class TransactionModel extends Model {
                 // o correto seria uma tabela com join...
                 paymentMethod: this.builder.raw('IF(payment_method = 0, "credit_card", "debit_card")'),
                 value: 'value',
+                createdAt: 'created_at'
             })
             .where('id', id)
     }

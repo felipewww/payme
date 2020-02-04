@@ -7,6 +7,7 @@ import {ProcessTransaction} from "@UseCases/ProcessTransaction";
 import {InvalidRequestError} from "@Helpers/Errors/InvalidRequestError";
 import {ITransactionRequest} from "@Protocols/TransactionRequest";
 import {Transaction} from "@Data/Transaction";
+import {ProcessPayable} from "@UseCases/ProcessPayable";
 
 export class TransactionController {
 
@@ -17,7 +18,8 @@ export class TransactionController {
 
         let transaction: Transaction;
         try{
-            transaction = await this.doTransaction(request);
+            transaction = await this.processTransaction(request);
+            await this.processPayable(transaction);
         } catch (e) {
             return new BadRequest( e );
         }
@@ -42,7 +44,7 @@ export class TransactionController {
         return validator.validate();
     }
 
-    public async doTransaction(request: IHttpRequest): Promise<Transaction> {
+    public async processTransaction(request: IHttpRequest): Promise<Transaction> {
         const transactionData: ITransactionRequest = {
             CVV: request.body.CVV,
             cardDueDate: request.body.cardDueDate,
@@ -56,5 +58,10 @@ export class TransactionController {
 
         let processTransaction = new ProcessTransaction(transactionData);
         return processTransaction.process();
+    }
+
+    public async processPayable(transaction: Transaction) {
+        let processPayable = new ProcessPayable(transaction);
+        return await processPayable.process();
     }
 }

@@ -10,5 +10,8 @@ exports.seed = function(knex) {
         {id: 3, name: 'Sr. Mostarda'},
         {id: 4, name: 'Dona Violeta'}
       ]);
-    });
+    })
+    .catch(reason => {
+      console.log('SEED DIDN\'T RUNS- Clients')
+    })
 };
