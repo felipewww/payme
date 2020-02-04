@@ -41,7 +41,24 @@ export class Payable {
         return this.transaction;
     }
 
-    public getPaymentDate() {
-        return this.transaction.createdAt;
+    public getPaymentDate(): Date {
+        let date: Date;
+        switch (this.transaction.paymentMethod.name()) {
+            case "debit_card":
+                date = this.transaction.createdAt;
+                break;
+
+            case "credit_card":
+                date = this.addDays(this.transaction.createdAt, 30);
+                break;
+        }
+
+        return date;
+    }
+
+    private addDays(date: Date, days: number): Date {
+        const copy = new Date(Number(date))
+        copy.setDate(date.getDate() + days);
+        return copy
     }
 }

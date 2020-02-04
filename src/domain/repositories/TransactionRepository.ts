@@ -28,7 +28,8 @@ export class TransactionRepository {
 
             // sim... Deveria ter uma tabela aqui para armazenar estes valores...
             payment_method: (data.paymentMethod === 'credit_card') ? 0 : 1,
-            value: data.value
+            value: data.value,
+            created_at: new Date()
         }
 
         return model.store(toStore);
